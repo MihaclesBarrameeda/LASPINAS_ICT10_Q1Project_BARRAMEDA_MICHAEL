@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Receipt Generator Project Coffee Shop</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 20px;
+      
+      background-image: url('images(1).jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    .menu-item {
+      margin: 10px 0;
+    }
+
+    .menu-item input {
+      width: 50px;
+    }
+
+    .summary {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #fcfcfc;
+      background-color: rgba(255, 255, 255, 0.85); /* Light background to ensure text remains readable */
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>OBMC Entrep Fair 10 EMERALD</h1>
+  <p>Coffee Shop Receipt Generator</p>
+
+  <hr>
+
+  <h2>Menu</h2>
+  
+  <div class="menu-item">
+    <label for="lemonade">Lemonade (₱700,000): </label>
+    <input type="number" min="0" value="0" id="lemonade">
+  </div>
+  
+  <div class="menu-item">
+    <label for="icedcoffee">Iced Coffee (₱1,500): </label>
+    <input type="number" min="0" value="0" id="icedcoffee">
+  </div>
+  
+  <div class="menu-item">
+    <label for="chicken">Chicken (₱1,200): </label>
+    <input type="number" min="0" value="0" id="chicken">
+  </div>
+  
+  <div class="menu-item">
+    <label for="pasta">Pasta (₱970): </label>
+    <input type="number" min="0" value="0" id="pasta">
+  </div>
+  
+  <div class="menu-item">
+    <label for="mocha">Mocha (₱99): </label>
+    <input type="number" min="0" value="0" id="mocha">
+  </div>
+
+  <button onclick="createOrder()">Create Order</button>
+
+  <div class="summary" id="summary">
+    <p>Your order summary will appear here.</p>
+  </div>
+
+  <br>
+  <nav>
+    <a href="SKU.html">Go to SKU Generator</a>
+  </nav>
+
+  <script>
+    function createOrder() {
+      
+      const prices = {
+        lemonade: 700000,
+        icedcoffee: 1500,
+        chicken: 1200,
+        pasta: 970,
+        mocha: 99
+      };
+      
+      let summaryText = "<h3>Order Summary</h3><ul>";
+      let total = 0;
+
+      for (let item in prices) {
+        let qty = parseInt(document.getElementById(item).value) || 0;
+        
+        if (qty > 0) {
+          let cost = qty * prices[item];
+          summaryText += `<li>${qty} × ${capitalize(item)} — ₱${cost.toLocaleString()}</li>`;
+          total += cost;
+        }
+      }
+
+      summaryText += `</ul><p><strong>Total: ₱${total.toLocaleString()}</strong></p>`;
+
+      if (total === 0) {
+        summaryText = "<p>No items selected.</p>";
+      }
+
+      document.getElementById("summary").innerHTML = summaryText;
+    }
+
+    function capitalize(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+  </script>
+
+</body>
+</html>
